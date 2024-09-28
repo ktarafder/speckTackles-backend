@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { ref, set } from "firebase/database";
 import db from "@/firebaseConfig"; // Adjust path if needed based on your file structure
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   try {
     // Parse the request body to get the new boolean value
     const body = await req.json();

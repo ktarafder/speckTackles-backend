@@ -13,6 +13,7 @@ export async function GET() {
     if (snapshot.exists()) {
       // Get the value of the `Light1` field as a boolean
       const lightOn = snapshot.val(); // Expecting true/false
+      console.log("Light status: ", lightOn);
 
       return NextResponse.json({ lightOn: lightOn }, { status: 200 });
     } else {
