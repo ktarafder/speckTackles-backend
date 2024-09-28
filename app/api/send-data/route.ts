@@ -4,23 +4,24 @@ import db from "@/firebaseConfig"; // Adjust path if needed based on your file s
 
 export async function POST(req: Request) {
   try {
-    // Parse the request body to get the new value
+    // Parse the request body to get the new boolean value
     const body = await req.json();
-    const { Light1 } = body;
+    const { lightOn } = body;
 
-    if (Light1 === undefined) {
-      return NextResponse.json({ error: "Light1 field is required" }, { status: 400 });
+    if (typeof lightOn !== "boolean") {
+      return NextResponse.json({ error: "lightOn field must be a boolean" }, { status: 400 });
     }
 
     // Reference to the `Light1` field in Realtime Database
     const lightRef = ref(db, "Light1");
 
-    // Update the Realtime Database with the new value
-    await set(lightRef, Light1);
+    // Update the Realtime Database with the new boolean value
+    await set(lightRef, lightOn);
 
-    return NextResponse.json({ message: "Light status updated successfully", newLightValue: Light1 }, { status: 200 });
+    return NextResponse.json({ message: "Light status updated successfully", newLightValue: lightOn }, { status: 200 });
   } catch (error) {
     console.error("Error updating light status: ", error);
     return NextResponse.json({ error: "Failed to update light status" }, { status: 500 });
   }
 }
+

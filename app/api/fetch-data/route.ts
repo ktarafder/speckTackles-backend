@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import db from "@/firebaseConfig"; // Adjust the path based on your project structure
 import { ref, get } from "firebase/database";
+import db from "@/firebaseConfig"; // Adjust path based on your project structure
 
 export async function GET() {
   try {
@@ -11,15 +11,16 @@ export async function GET() {
     const snapshot = await get(lightRef);
 
     if (snapshot.exists()) {
-      // Get the value of the `Light1` field and map it to light status
-      const lightStatus = snapshot.val() === 0 ? "On" : "Off";
-      
-      return NextResponse.json({ lightStatus: lightStatus, rawValue: snapshot.val() }, { status: 200 });
+      // Get the value of the `Light1` field as a boolean
+      const lightOn = snapshot.val(); // Expecting true/false
+
+      return NextResponse.json({ lightOn: lightOn }, { status: 200 });
     } else {
       return NextResponse.json({ message: "Light status data not found" }, { status: 404 });
     }
   } catch (error) {
-    console.error("Error getting data: ", error);
+    console.error("Error getting light status: ", error);
     return NextResponse.json({ error: "Failed to retrieve data" }, { status: 500 });
   }
 }
+
