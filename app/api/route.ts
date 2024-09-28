@@ -1,9 +1,5 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-export function middleware(req: Request) {
-  if (req.method === "POST") {
-    return NextResponse.next();
-  }
-
-  return new NextResponse();
+export async function GET() {
+  return NextResponse.json({ message: 'Request received' }, { status: 200 });
 }
